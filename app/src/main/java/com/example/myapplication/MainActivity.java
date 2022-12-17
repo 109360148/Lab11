@@ -84,14 +84,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_delete.setOnClickListener(view -> {
-            if (ed_book.length() < 1 || ed_price.length() < 1)
+            if (ed_book.length() < 1)
                 Toast.makeText(MainActivity.this,"書名請勿留空", Toast.LENGTH_SHORT).show();
             else {
                 try {
-                    dbrw.execSQL("DELETE FROM myTable WHERE book LIKE = '"
-                            + ed_book.getText().toString() + "'");
-                    Toast.makeText(MainActivity.this,"刪除書名" + ed_book.getText().toString() +
-                            "價格" + ed_price.getText().toString(), Toast.LENGTH_SHORT).show();
+                    dbrw.execSQL("DELETE FROM myTable WHERE book LIKE '" + ed_book.getText().toString() + "'");
+                    Toast.makeText(MainActivity.this,"刪除書名" +
+                                    ed_book.getText().toString(), Toast.LENGTH_SHORT).show();
                     ed_book.setText("");
                     ed_price.setText("");
                 } catch (Exception e) {
@@ -114,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,"共有"+c.getCount()+"筆", Toast.LENGTH_SHORT).show();
             for(int i = 0 ; i < c.getCount(); i++) {
                 items.add("書籍："+ c.getString(0)+"\t\t\t\t價格："+c.getString(1));
+                c.moveToNext();
             }
             adapter.notifyDataSetChanged();
             c.close();
